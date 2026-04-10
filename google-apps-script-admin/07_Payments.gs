@@ -5,6 +5,8 @@ function savePayment(payload) {
   const paymentsSheet = getSheet(SHEET_NAMES.payments);
   const admissionId = clean(payload.admissionId);
   const amount = toNumber(payload.amount, 0);
+  const sendReceiptEmail = isTruthy(payload.sendReceiptEmail);
+  const sendFullPaymentEmail = isTruthy(payload.sendFullPaymentEmail);
 
   if (!admissionId) {
     return jsonResponse({ success: false, message: "Admission ID is required" });
@@ -21,8 +23,10 @@ function savePayment(payload) {
     return jsonResponse({ success: false, message: "Admission not found" });
   }
 
+  const paymentId = getNextPrefixedId(paymentsSheet, "Payment ID", "P");
+
   appendObjectRow(paymentsSheet, {
-    "Payment ID": getNextPrefixedId(paymentsSheet, "Payment ID", "P"),
+    "Payment ID": paymentId,
     "Admission ID": admissionId,
     "Student Name": clean(admissionRow["Student Name"]),
     "Batch Code": clean(admissionRow["Batch Code"]),
@@ -33,9 +37,45 @@ function savePayment(payload) {
     "Notes": clean(payload.notes)
   });
 
-  recalculateAdmissionFinancials(admissionsSheet, admissionRow._rowNumber);
+  const financials = recalculateAdmissionFinancials(admissionsSheet, admissionRow._rowNumber);
+  const emailMessages = [];
 
-  return jsonResponse({ success: true, message: "Payment saved successfully" });
+  if (sendReceiptEmail) {
+    try {
+      sendPaymentEmailInternal({
+        admissionId: admissionId,
+        paymentId: paymentId,
+        emailType: "receipt"
+      });
+      emailMessages.push("Receipt emailed.");
+    } catch (error) {
+      emailMessages.push("Receipt email failed: " + error.message);
+    }
+  }
+
+  if (sendFullPaymentEmail && financials.paymentStatus === "Paid") {
+    try {
+      sendPaymentEmailInternal({
+        admissionId: admissionId,
+        paymentId: paymentId,
+        emailType: "full-payment"
+      });
+      emailMessages.push("Full payment email sent.");
+    } catch (error) {
+      emailMessages.push("Full payment email failed: " + error.message);
+    }
+  }
+
+  return jsonResponse({
+    success: true,
+    message: emailMessages.length
+      ? "Payment saved successfully. " + emailMessages.join(" ")
+      : "Payment saved successfully",
+    paymentId: paymentId,
+    paymentStatus: financials.paymentStatus,
+    pending: financials.pending,
+    totalPaid: financials.totalPaid
+  });
 }
 
 function getPayments(payload) {
@@ -82,6 +122,13 @@ function recalculateAdmissionFinancials(admissionsSheet, rowNumber) {
   setCellIfHeaderExists(admissionsSheet, rowNumber, headerMap, "Total Paid", totalPaid);
   setCellIfHeaderExists(admissionsSheet, rowNumber, headerMap, "Pending", pending);
   setCellIfHeaderExists(admissionsSheet, rowNumber, headerMap, "Payment Status", paymentStatus);
+
+  return {
+    adjustedFee: adjustedFee,
+    totalPaid: totalPaid,
+    pending: pending,
+    paymentStatus: paymentStatus
+  };
 }
 
 function getNextPrefixedId(sheet, headerName, prefix) {

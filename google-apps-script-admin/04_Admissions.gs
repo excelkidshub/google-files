@@ -144,3 +144,66 @@ function getNextAdmissionId(sheet) {
 
   return "A" + String(maxNumber + 1).padStart(3, "0");
 }
+
+function updateStudent(payload) {
+  var sheet = getSheet(SHEET_NAMES.admissions);
+  var admissionId = clean(payload.admissionId);
+
+  if (!admissionId) {
+    return jsonResponse({ success: false, message: "Admission ID is required" });
+  }
+
+  // Find the row with this admission ID
+  var data = sheet.getDataRange().getValues();
+  var headerRow = data[0];
+  var rowIndex = -1;
+
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][0] == admissionId) {
+      rowIndex = i + 1; // Sheets use 1-based indexing
+      break;
+    }
+  }
+
+  if (rowIndex === -1) {
+    return jsonResponse({ success: false, message: "Student not found" });
+  }
+
+  // Update fields
+  var updates = {};
+  
+  if (payload.parentName !== undefined) updates["Parent Name"] = clean(payload.parentName);
+  if (payload.mobile !== undefined) updates["Mobile"] = clean(payload.mobile);
+  if (payload.email !== undefined) updates["Email"] = clean(payload.email);
+  if (payload.address !== undefined) updates["Address"] = clean(payload.address);
+  if (payload.city !== undefined) updates["City"] = clean(payload.city);
+  if (payload.studentName !== undefined) updates["Student Name"] = clean(payload.studentName);
+  if (payload.age !== undefined) updates["Age"] = clean(payload.age);
+  if (payload.gender !== undefined) updates["Gender"] = clean(payload.gender);
+  if (payload.school !== undefined) updates["School"] = clean(payload.school);
+  if (payload.grade !== undefined) updates["Grade"] = clean(payload.grade);
+  if (payload.level !== undefined) updates["Level"] = clean(payload.level);
+  if (payload.mode !== undefined) updates["Mode"] = clean(payload.mode);
+  if (payload.batchCode !== undefined) updates["Batch Code"] = clean(payload.batchCode);
+  if (payload.startDate !== undefined) updates["Start Date"] = clean(payload.startDate);
+  if (payload.endDate !== undefined) updates["End Date"] = clean(payload.endDate);
+  if (payload.status !== undefined) updates["Status"] = clean(payload.status);
+  if (payload.totalFee !== undefined) updates["Total Fee"] = Number(payload.totalFee) || 0;
+  if (payload.discount !== undefined) updates["Discount"] = Number(payload.discount) || 0;
+  if (payload.manualAdjustment !== undefined) updates["Manual Adjustment"] = Number(payload.manualAdjustment) || 0;
+  if (payload.totalPaid !== undefined) updates["Total Paid"] = Number(payload.totalPaid) || 0;
+  if (payload.notes !== undefined) updates["Notes"] = clean(payload.notes);
+
+  // Apply updates
+  for (var col = 0; col < headerRow.length; col++) {
+    var header = headerRow[col];
+    if (updates[header] !== undefined) {
+      sheet.getRange(rowIndex, col + 1).setValue(updates[header]);
+    }
+  }
+
+  return jsonResponse({
+    success: true,
+    message: "Student updated successfully"
+  });
+}

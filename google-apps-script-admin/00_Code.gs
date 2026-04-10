@@ -23,6 +23,10 @@ function doPost(e) {
       return getAdmissions(payload);
     }
 
+    if (action === "updateStudent") {
+      return updateStudent(payload);
+    }
+
     if (action === "getBatches") {
       return getBatches(payload);
     }
@@ -45,6 +49,10 @@ function doPost(e) {
 
     if (action === "getPayments") {
       return getPayments(payload);
+    }
+
+    if (action === "sendPaymentEmail") {
+      return sendPaymentEmail(payload);
     }
 
     if (action === "saveExpense") {
