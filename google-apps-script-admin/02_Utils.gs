@@ -137,6 +137,18 @@ function formatDateValue(value) {
   return clean(value);
 }
 
+function formatDateTimeValue(value) {
+  if (!value) {
+    return "";
+  }
+
+  if (Object.prototype.toString.call(value) === "[object Date]" && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, Session.getScriptTimeZone(), "dd/MM/yyyy HH:mm:ss");
+  }
+
+  return clean(value);
+}
+
 function sortByDateDesc(items, fieldName) {
   return items.sort(function(left, right) {
     return String(right[fieldName] || "").localeCompare(String(left[fieldName] || ""));

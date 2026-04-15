@@ -1,3 +1,15 @@
+function getFeeByLevel(level) {
+  const normalizedLevel = clean(level).toLowerCase();
+  
+  if (normalizedLevel === "basic") {
+    return 4500;
+  } else if (normalizedLevel === "advanced" || normalizedLevel === "proficient") {
+    return 6500;
+  }
+  
+  return 0;
+}
+
 function admission(payload) {
   var sheet = getSheet(SHEET_NAMES.admissions);
 
@@ -35,7 +47,8 @@ function admission(payload) {
   }
 
   var admissionId = getNextAdmissionId(sheet);
-  var createdDate = new Date();
+  var createdDate = formatDateTimeValue(new Date());
+  var totalFee = getFeeByLevel(level);
 
   var row = [
     admissionId,
@@ -55,7 +68,7 @@ function admission(payload) {
     "",
     "",
     "Pending Start",
-    "",
+    totalFee,
     0,
     0,
     "",
@@ -65,16 +78,42 @@ function admission(payload) {
     admissionSource,
     "",
     "",
-    createdDate
+    createdDate,
+    "", // Certificate Status
+    "", // Certificate Number
+    "", // Certificate Issue Date
+    "", // Certificate Sent Date
+    "", // Send Receipt
+    "", // Receipt Status
+    "Pending" // Notification Status - mark for background email processing
   ];
 
-  sheet.appendRow(row);
+  // Find the first empty row (where Admission ID is blank)
+  var data = sheet.getDataRange().getValues();
+  var insertRow = -1;
 
+  for (var i = 1; i < data.length; i++) {
+    if (!data[i][0] || clean(data[i][0]) === "") {
+      insertRow = i + 1; // Convert to 1-based row number
+      break;
+    }
+  }
+
+  if (insertRow === -1) {
+    // If no empty row found, append at the end
+    sheet.appendRow(row);
+  } else {
+    // Insert at the first empty row (pre-created formula row)
+    sheet.getRange(insertRow, 1, 1, row.length).setValues([row]);
+  }
+
+  // Return success immediately to user (async email sending happens in background)
   return jsonResponse({
     success: true,
     message: "Registration completed successfully"
   });
 }
+
 
 function getAdmissions(payload) {
   authorizeAdmin(payload);

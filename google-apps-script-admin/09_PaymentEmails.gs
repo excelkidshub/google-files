@@ -183,8 +183,9 @@ function buildPaymentEmailMeta(emailType, context) {
   const financials = context.financials;
   const studentName = clean(admission["Student Name"]);
   const parentName = clean(admission["Parent Name"]);
-  const paymentDate = formatDisplayDate(payment["Payment Date"]);
-  const paymentAmount = toNumber(payment["Amount"], 0);
+  const paymentDate = formatDisplayDate(payment["Payment Date"] || new Date());
+  // Use payment amount if available, otherwise use total paid from admission
+  const paymentAmount = toNumber(payment["Amount"], 0) || financials.totalPaid;
   const paymentId = clean(payment["Payment ID"]) || "Pending";
   const emailTypeLabel = emailType === "full-payment"
     ? "Full Payment Confirmation"
@@ -237,7 +238,7 @@ function buildPaymentEmailMeta(emailType, context) {
       "{{ACADEMY_EMAIL}}": academyEmail,
       "{{ACADEMY_PHONE}}": academyPhone,
       "{{ACADEMY_ADDRESS}}": academyAddress,
-      "{{RECEIPT_NO}}": paymentId,
+      "{{RECEIPT_NO}}": clean(admission["Admission ID"]),
       "{{PAYMENT_ID}}": paymentId,
       "{{DATE}}": paymentDate,
       "{{PAYMENT_DATE}}": paymentDate,

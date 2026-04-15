@@ -19,6 +19,7 @@ CELL_BORDER = Border(left=THIN_SIDE, right=THIN_SIDE, top=THIN_SIDE, bottom=THIN
 CENTER_ALIGNMENT = Alignment(horizontal="center", vertical="center")
 LEFT_ALIGNMENT = Alignment(horizontal="left", vertical="center")
 DATE_FORMAT = "yyyy-mm-dd"
+DATE_TIME_FORMAT = "dd/mm/yyyy h:mm:ss"
 CURRENCY_FORMAT = u'\u20b9#,##0.00'
 BATCH_SECTION_FILL = PatternFill("solid", fgColor="EAF4EA")
 CARD_FILL = PatternFill("solid", fgColor="F8FAFC")
@@ -68,6 +69,13 @@ def set_column_formats(worksheet, date_columns: Iterable[str], currency_columns:
     for column in currency_columns:
         for cell in worksheet[column][1:]:
             cell.number_format = CURRENCY_FORMAT
+
+
+def set_datetime_format(worksheet, datetime_columns: Iterable[str]) -> None:
+    """Apply date-time format to specific columns (e.g., Created Date)."""
+    for column in datetime_columns:
+        for cell in worksheet[column][1:]:
+            cell.number_format = DATE_TIME_FORMAT
 
 
 def center_columns(worksheet, columns: Iterable[str]) -> None:
@@ -139,6 +147,9 @@ def create_admissions_sheet(workbook: Workbook) -> None:
         "Certificate Number",
         "Certificate Issue Date",
         "Certificate Sent Date",
+        "Send Receipt",
+        "Receipt Status",
+        "Notification Status",
     ]
     worksheet.append(headers)
 
@@ -160,15 +171,22 @@ def create_admissions_sheet(workbook: Workbook) -> None:
     )
     add_dropdown(worksheet, f"X2:X{MAX_DATA_ROWS + 1}", ["Not Started", "Partial", "Completed"])
     add_dropdown(worksheet, f"AC2:AC{MAX_DATA_ROWS + 1}", ["Not Issued", "Ready", "Sent"])
+    add_dropdown(worksheet, f"AG2:AG{MAX_DATA_ROWS + 1}", ["", "Send"])
+    add_dropdown(worksheet, f"AH2:AH{MAX_DATA_ROWS + 1}", ["Not Sent", "Email Sent", "Print Ready"])
+    add_dropdown(worksheet, f"AI2:AI{MAX_DATA_ROWS + 1}", ["Pending", "Sent", "Failed"])
 
-    set_column_formats(worksheet, ["O", "P", "AB", "AE", "AF"], ["R", "S", "T", "U", "V", "W"])
-    center_columns(worksheet, ["A", "H", "I", "K", "L", "M", "N", "Q", "X"])
+    set_column_formats(worksheet, ["O", "P", "AE", "AF"], ["R", "S", "T", "U", "V", "W"])
+    set_datetime_format(worksheet, ["AB"])
+    center_columns(worksheet, ["A", "H", "I", "K", "L", "M", "N", "Q", "X", "AG", "AH", "AI"])
     apply_borders(worksheet)
     auto_fit_columns(worksheet)
     worksheet.column_dimensions["E"].width = 24
     worksheet.column_dimensions["F"].width = 16
     worksheet.column_dimensions["AC"].width = 16
     worksheet.column_dimensions["AD"].width = 22
+    worksheet.column_dimensions["AG"].width = 12
+    worksheet.column_dimensions["AH"].width = 16
+    worksheet.column_dimensions["AI"].width = 16
 
 
 def create_payments_sheet(workbook: Workbook) -> None:
