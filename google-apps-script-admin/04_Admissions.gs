@@ -11,107 +11,66 @@ function getFeeByLevel(level) {
 }
 
 function admission(payload) {
-  var sheet = getSheet(SHEET_NAMES.admissions);
+  // ⚡ FAST RESPONSE - Queue for background processing
+  try {
+    // Basic validation only - quick checks
+    var parentName = clean(payload.parentName);
+    var mobile = clean(payload.mobile);
+    var studentName = clean(payload.studentName);
+    var level = clean(payload.level);
+    var mode = clean(payload.mode);
 
-  var parentName = clean(payload.parentName);
-  var mobile = clean(payload.mobile);
-  var email = clean(payload.email);
-  var address = clean(payload.address);
-  var city = clean(payload.city);
-  var studentName = clean(payload.studentName);
-  var age = clean(payload.age);
-  var gender = clean(payload.gender);
-  var school = clean(payload.school);
-  var grade = clean(payload.grade);
-  var level = clean(payload.level);
-  var mode = clean(payload.mode);
-  var admissionSource = clean(payload.admissionSource) || "Website";
-
-  if (!parentName) {
-    return jsonResponse({ success: false, message: "Parent Name is required" });
-  }
-  if (!mobile) {
-    return jsonResponse({ success: false, message: "Mobile is required" });
-  }
-  if (!studentName) {
-    return jsonResponse({ success: false, message: "Student Name is required" });
-  }
-  if (!level) {
-    return jsonResponse({ success: false, message: "Level is required" });
-  }
-  if (!mode) {
-    return jsonResponse({ success: false, message: "Mode is required" });
-  }
-  if (email && !isValidEmail(email)) {
-    return jsonResponse({ success: false, message: "Invalid email address" });
-  }
-
-  var admissionId = getNextAdmissionId(sheet);
-  var createdDate = formatDateTimeValue(new Date());
-  var totalFee = getFeeByLevel(level);
-
-  var row = [
-    admissionId,
-    parentName,
-    mobile,
-    email,
-    address,
-    city,
-    studentName,
-    age,
-    gender,
-    school,
-    grade,
-    level,
-    "",
-    mode,
-    "",
-    "",
-    "Pending Start",
-    totalFee,
-    0,
-    0,
-    "",
-    "",
-    "",
-    "",
-    admissionSource,
-    "",
-    "",
-    createdDate,
-    "", // Certificate Status
-    "", // Certificate Number
-    "", // Certificate Issue Date
-    "", // Certificate Sent Date
-    "", // Send Receipt
-    "", // Receipt Status
-    "Pending" // Notification Status - mark for background email processing
-  ];
-
-  // Find the first empty row (where Admission ID is blank)
-  var data = sheet.getDataRange().getValues();
-  var insertRow = -1;
-
-  for (var i = 1; i < data.length; i++) {
-    if (!data[i][0] || clean(data[i][0]) === "") {
-      insertRow = i + 1; // Convert to 1-based row number
-      break;
+    if (!parentName || !mobile || !studentName || !level || !mode) {
+      return jsonResponse({ success: false, message: "Required fields missing" });
     }
-  }
 
-  if (insertRow === -1) {
-    // If no empty row found, append at the end
-    sheet.appendRow(row);
-  } else {
-    // Insert at the first empty row (pre-created formula row)
-    sheet.getRange(insertRow, 1, 1, row.length).setValues([row]);
-  }
+    // Get or create the queue sheet
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var queueSheet = null;
+    
+    try {
+      queueSheet = spreadsheet.getSheetByName("admission_queue");
+    } catch (e) {
+      queueSheet = null;
+    }
+    
+    if (!queueSheet) {
+      Logger.log("Creating admission_queue sheet...");
+      queueSheet = spreadsheet.insertSheet("admission_queue");
+      queueSheet.appendRow(["Timestamp", "Payload", "Status"]);
+      Logger.log("✅ admission_queue sheet created");
+    }
 
-  // Return success immediately to user (async email sending happens in background)
-  return jsonResponse({
-    success: true,
-    message: "Registration completed successfully"
-  });
+    // Store the entire payload as JSON for background processing
+    var timestamp = new Date();
+    var payloadJson = JSON.stringify(payload);
+    
+    queueSheet.appendRow([
+      formatDateTimeValue(timestamp),
+      payloadJson,
+      "Pending"
+    ]);
+
+    Logger.log("✅ Admission queued for processing: " + studentName + " - " + mobile + " - " + level);
+
+    // ✅ Return immediately to user - NO WAITING
+    return jsonResponse({
+      success: true,
+      message: "Registration received! Processing in background...",
+      processingInBackground: true
+    });
+
+  } catch (error) {
+    const errorMsg = error && error.message ? error.message : "Unknown error";
+    const errorStack = error && error.stack ? error.stack : "No stack trace";
+    Logger.log("❌ Admission queue error: " + errorMsg);
+    Logger.log("Stack: " + errorStack);
+    
+    return jsonResponse({
+      success: false,
+      message: "Error: " + errorMsg
+    });
+  }
 }
 
 
