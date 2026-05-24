@@ -26,6 +26,7 @@ This file is a working handoff note for future Codex sessions about the Excel/Go
 The workbook design currently uses these sheets:
 
 - `admissions`
+- `teacher_training_admissions`
 - `payments`
 - `batches`
 - `expenses`
@@ -73,6 +74,38 @@ In the generator, certificate fields were later added as planned future columns:
 - `Certificate Sent Date`
 
 These certificate columns are present in `ExcelKidsHub-Master-Data-with-certificate-columns.xlsx`, but not yet merged into the currently active `ExcelKidsHub-Master-Data.xlsx`.
+
+## Teacher training admissions columns
+
+Teacher/parent phonics training is kept separate from child admissions in:
+
+- `teacher_training_admissions`
+
+Columns:
+
+- `Training ID`
+- `Full Name`
+- `Mobile`
+- `Email`
+- `City`
+- `Profession`
+- `Education`
+- `Training Type`
+- `Mode`
+- `Status`
+- `Total Fee`
+- `Total Paid`
+- `Pending`
+- `Payment Status`
+- `Created Date`
+- `Send Receipt`
+- `Receipt Status`
+- `Certificate Status`
+- `Certificate Number`
+- `Certificate Issue Date`
+- `Certificate Sent Date`
+- `Certificate Error`
+- `Notes`
 
 ## What has been done
 

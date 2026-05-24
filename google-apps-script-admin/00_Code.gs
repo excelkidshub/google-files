@@ -11,6 +11,10 @@ function doPost(e) {
       return admission(payload);
     }
 
+    if (action === "teacherTrainingAdmission") {
+      return teacherTrainingAdmission(payload);
+    }
+
     if (action === "adminLogin") {
       return adminLogin(payload);
     }
@@ -80,8 +84,13 @@ function onEdit(e) {
     // Log every edit attempt for debugging
     Logger.log("onEdit triggered - Sheet: " + sheet.getName() + ", Column: " + range.getColumn() + ", Value: " + range.getValue());
     
+    if (sheet.getName() === SHEET_NAMES.teacherTrainingAdmissions) {
+      handleTeacherTrainingEdit(sheet, range);
+      return;
+    }
+
     // Only process changes in "admissions" sheet
-    if (sheet.getName() !== "admissions") {
+    if (sheet.getName() !== SHEET_NAMES.admissions) {
       Logger.log("Not admissions sheet, skipping");
       return;
     }

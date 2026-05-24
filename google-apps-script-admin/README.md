@@ -14,6 +14,7 @@ These files are meant to be created as separate files inside the same Google App
 - `07_Payments.gs`
 - `08_Expenses.gs`
 - `09_PaymentEmails.gs`
+- `10_TeacherTraining.gs`
 
 ## Script Properties
 
@@ -22,6 +23,7 @@ Set these in Apps Script:
 - `ADMIN_PASSWORD`
 - `ADMIN_TOKEN`
 - `RECEIPT_TEMPLATE_ID` or `RECEIPT_TEMPLATE_NAME`
+- `TEACHER_CERTIFICATE_TEMPLATE_ID` or `TEACHER_CERTIFICATE_TEMPLATE_NAME`
 
 Optional for the Vercel website project:
 
@@ -30,6 +32,7 @@ Optional for the Vercel website project:
 Optional but recommended:
 
 - `RECEIPT_ARCHIVE_FOLDER_ID`
+- `TEACHER_CERTIFICATE_ARCHIVE_FOLDER_ID`
 - `ACADEMY_NAME`
 - `ACADEMY_EMAIL`
 - `ACADEMY_PHONE`
@@ -41,6 +44,7 @@ Optional but recommended:
 Public:
 
 - `admission`
+- `teacherTrainingAdmission`
 
 Admin:
 
@@ -81,6 +85,7 @@ Admin:
 - `batches`
 - `payments`
 - `expenses`
+- `teacher_training_admissions`
 
 ## Expected headers
 
@@ -149,6 +154,62 @@ Optional admissions headers for tracking email activity:
 - `Last Receipt Sent Date`
 - `Full Payment Email Date`
 - `Last Payment Reminder Date`
+
+### teacher_training_admissions
+
+- `Training ID`
+- `Full Name`
+- `Mobile`
+- `Email`
+- `City`
+- `Profession`
+- `Education`
+- `Training Type`
+- `Mode`
+- `Status`
+- `Total Fee`
+- `Total Paid`
+- `Pending`
+- `Payment Status`
+- `Created Date`
+- `Send Receipt`
+- `Receipt Status`
+- `Certificate Status`
+- `Certificate Number`
+- `Certificate Issue Date`
+- `Certificate Sent Date`
+- `Certificate Error`
+- `Notes`
+
+Manual teacher-training receipt flow:
+
+1. Set `Send Receipt = Send`
+2. The `onEdit` trigger marks `Receipt Status = Pending`
+3. Run `processPendingTeacherTrainingReceipts()` by time trigger or manually
+4. The script sends the receipt and writes `Receipt Status = Email Sent`
+
+Manual teacher-training certificate flow:
+
+1. Upload `Teachers_Certificate_template.pptx` to Google Drive
+2. Open it with Google Slides and save/convert it as a Google Slides file
+3. Set `TEACHER_CERTIFICATE_TEMPLATE_ID` to that Slides file ID
+4. Set `Certificate Status = Ready`
+5. Run `processReadyTeacherTrainingCertificates()` by time trigger or manually
+6. The script generates the PDF, emails it, writes sent date, and changes status to `Sent`
+
+Supported teacher certificate placeholders:
+
+- `{{NAME}}`
+- `{{FULL_NAME}}`
+- `{{COURSE}}`
+- `{{TRAINING_TYPE}}`
+- `{{MODE}}`
+- `{{DATE}}`
+- `{{ISSUE_DATE}}`
+- `{{CERTIFICATE_NO}}`
+- `{{CERTIFICATE_NUMBER}}`
+- `{{TRAINING_ID}}`
+- `{{ACADEMY_NAME}}`
 
 ## Receipt template setup
 

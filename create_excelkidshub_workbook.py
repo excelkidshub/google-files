@@ -189,6 +189,74 @@ def create_admissions_sheet(workbook: Workbook) -> None:
     worksheet.column_dimensions["AI"].width = 16
 
 
+def create_teacher_training_admissions_sheet(workbook: Workbook) -> None:
+    """Create a separate admissions sheet for parent/teacher phonics training."""
+    worksheet = workbook.create_sheet("teacher_training_admissions")
+    headers = [
+        "Training ID",
+        "Full Name",
+        "Mobile",
+        "Email",
+        "City",
+        "Profession",
+        "Education",
+        "Training Type",
+        "Mode",
+        "Status",
+        "Total Fee",
+        "Total Paid",
+        "Pending",
+        "Payment Status",
+        "Created Date",
+        "Send Receipt",
+        "Receipt Status",
+        "Certificate Status",
+        "Certificate Number",
+        "Certificate Issue Date",
+        "Certificate Sent Date",
+        "Certificate Error",
+        "Notes",
+    ]
+    worksheet.append(headers)
+
+    for row in range(2, MAX_DATA_ROWS + 2):
+        worksheet[f"M{row}"] = f'=IF(K{row}="","",K{row}-L{row})'
+        worksheet[f"N{row}"] = (
+            f'=IF(K{row}="","",IF(L{row}=0,"Not Started",IF(L{row}<K{row},"Partial","Completed")))'
+        )
+
+    setup_sheet_basics(worksheet)
+    add_dropdown(
+        worksheet,
+        f"F2:F{MAX_DATA_ROWS + 1}",
+        ["Parent", "Teacher", "Preschool Owner", "Tutor", "Student", "Homemaker", "Other"],
+    )
+    add_dropdown(worksheet, f"H2:H{MAX_DATA_ROWS + 1}", ["Parent Teacher Phonics Training"])
+    add_dropdown(worksheet, f"I2:I{MAX_DATA_ROWS + 1}", ["Online", "Offline"])
+    add_dropdown(
+        worksheet,
+        f"J2:J{MAX_DATA_ROWS + 1}",
+        ["Pending Start", "Active", "Completed", "Dropped"],
+    )
+    add_dropdown(worksheet, f"N2:N{MAX_DATA_ROWS + 1}", ["Not Started", "Partial", "Completed"])
+    add_dropdown(worksheet, f"P2:P{MAX_DATA_ROWS + 1}", ["", "Send"])
+    add_dropdown(worksheet, f"Q2:Q{MAX_DATA_ROWS + 1}", ["Not Sent", "Pending", "Email Sent"])
+    add_dropdown(worksheet, f"R2:R{MAX_DATA_ROWS + 1}", ["Not Issued", "Ready", "Sent"])
+
+    set_column_formats(worksheet, ["T", "U"], ["K", "L", "M"])
+    set_datetime_format(worksheet, ["O"])
+    center_columns(worksheet, ["A", "F", "H", "I", "J", "N", "P", "Q", "R"])
+    apply_borders(worksheet)
+    auto_fit_columns(worksheet)
+    worksheet.column_dimensions["B"].width = 24
+    worksheet.column_dimensions["D"].width = 26
+    worksheet.column_dimensions["G"].width = 22
+    worksheet.column_dimensions["H"].width = 30
+    worksheet.column_dimensions["S"].width = 24
+    worksheet.column_dimensions["V"].width = 26
+    worksheet.column_dimensions["W"].width = 28
+
+
 def create_payments_sheet(workbook: Workbook) -> None:
     """Create the payments tracking sheet."""
     worksheet = workbook.create_sheet("payments")
@@ -432,6 +500,7 @@ def create_workbook() -> Workbook:
     """Build the complete workbook with all required sheets."""
     workbook = Workbook()
     create_admissions_sheet(workbook)
+    create_teacher_training_admissions_sheet(workbook)
     create_payments_sheet(workbook)
     create_batches_sheet(workbook)
     create_expenses_sheet(workbook)
