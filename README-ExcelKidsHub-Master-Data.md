@@ -65,6 +65,19 @@ Current `admissions` design includes:
 - `Referral Type`
 - `Referrer Name`
 - `Created Date`
+- `Send Certificate`
+- `Certificate Status`
+- `Certificate Number`
+- `Certificate Issue Date`
+- `Certificate Sent Date`
+- `Certificate PDF URL`
+- `Certificate Image URL`
+- `Send Certificate WhatsApp`
+- `Certificate WhatsApp Status`
+- `Certificate WhatsApp Link`
+- `Certificate WhatsApp Sent Date`
+- `Certificate WhatsApp Error`
+- `Certificate Error`
 
 In the generator, certificate fields were later added as planned future columns:
 
@@ -322,12 +335,25 @@ Recommended stack:
 
 Manual certificate send flow:
 
-1. user sets `Certificate Status = Ready`
+1. user sets `Send Certificate = Send`
 2. Apps Script generates certificate number if blank
-3. Apps Script creates certificate
-4. Apps Script sends email
-5. Apps Script writes `Certificate Sent Date`
-6. Apps Script changes status to `Sent`
+3. Apps Script creates certificate PDF and PNG image from Google Slides
+4. Apps Script sends the PDF by email
+5. Apps Script writes `Certificate PDF URL` and `Certificate Image URL`
+6. WhatsApp remains separate and does not affect email success/failure
+7. Apps Script writes `Certificate Sent Date`
+8. Apps Script changes status to `Sent`
+
+Separate WhatsApp certificate flow:
+
+1. Set `Send Certificate WhatsApp = Send`
+2. Apps Script generates the certificate image
+3. Apps Script writes `Certificate WhatsApp Link`
+4. Open the link and send the pre-filled WhatsApp message manually
+5. Set `Certificate WhatsApp Status = Sent`
+6. Apps Script writes `Certificate WhatsApp Sent Date`
+
+Email and WhatsApp are intentionally separate. This WhatsApp flow is free and does not require WhatsApp Business API keys or Meta billing. Normal WhatsApp links cannot auto-attach or auto-send an image; they open a pre-filled message for manual sending.
 
 ### Better batch mapping
 

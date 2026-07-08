@@ -143,10 +143,19 @@ def create_admissions_sheet(workbook: Workbook) -> None:
         "Referral Type",
         "Referrer Name",
         "Created Date",
+        "Send Certificate",
         "Certificate Status",
         "Certificate Number",
         "Certificate Issue Date",
         "Certificate Sent Date",
+        "Certificate PDF URL",
+        "Certificate Image URL",
+        "Send Certificate WhatsApp",
+        "Certificate WhatsApp Status",
+        "Certificate WhatsApp Link",
+        "Certificate WhatsApp Sent Date",
+        "Certificate WhatsApp Error",
+        "Certificate Error",
         "Send Receipt",
         "Receipt Status",
         "Notification Status",
@@ -170,23 +179,34 @@ def create_admissions_sheet(workbook: Workbook) -> None:
         ["Pending Start", "Active", "Completed", "Dropped"],
     )
     add_dropdown(worksheet, f"X2:X{MAX_DATA_ROWS + 1}", ["Not Started", "Partial", "Completed"])
-    add_dropdown(worksheet, f"AC2:AC{MAX_DATA_ROWS + 1}", ["Not Issued", "Ready", "Sent"])
-    add_dropdown(worksheet, f"AG2:AG{MAX_DATA_ROWS + 1}", ["", "Send"])
-    add_dropdown(worksheet, f"AH2:AH{MAX_DATA_ROWS + 1}", ["Not Sent", "Email Sent", "Print Ready"])
-    add_dropdown(worksheet, f"AI2:AI{MAX_DATA_ROWS + 1}", ["Pending", "Sent", "Failed"])
+    add_dropdown(worksheet, f"AC2:AC{MAX_DATA_ROWS + 1}", ["", "Send"])
+    add_dropdown(worksheet, f"AD2:AD{MAX_DATA_ROWS + 1}", ["Not Issued", "Pending", "Ready", "Sent", "Failed"])
+    add_dropdown(worksheet, f"AJ2:AJ{MAX_DATA_ROWS + 1}", ["", "Send"])
+    add_dropdown(worksheet, f"AK2:AK{MAX_DATA_ROWS + 1}", ["", "Pending", "Link Ready", "Sent", "Failed", "Mobile Missing"])
+    add_dropdown(worksheet, f"AP2:AP{MAX_DATA_ROWS + 1}", ["", "Send"])
+    add_dropdown(worksheet, f"AQ2:AQ{MAX_DATA_ROWS + 1}", ["Not Sent", "Email Sent", "Print Ready"])
+    add_dropdown(worksheet, f"AR2:AR{MAX_DATA_ROWS + 1}", ["Pending", "Sent", "Failed"])
 
-    set_column_formats(worksheet, ["O", "P", "AE", "AF"], ["R", "S", "T", "U", "V", "W"])
+    set_column_formats(worksheet, ["O", "P", "AF", "AG", "AM"], ["R", "S", "T", "U", "V", "W"])
     set_datetime_format(worksheet, ["AB"])
-    center_columns(worksheet, ["A", "H", "I", "K", "L", "M", "N", "Q", "X", "AG", "AH", "AI"])
+    center_columns(worksheet, ["A", "H", "I", "K", "L", "M", "N", "Q", "X", "AC", "AD", "AJ", "AK", "AP", "AQ", "AR"])
     apply_borders(worksheet)
     auto_fit_columns(worksheet)
     worksheet.column_dimensions["E"].width = 24
     worksheet.column_dimensions["F"].width = 16
-    worksheet.column_dimensions["AC"].width = 16
-    worksheet.column_dimensions["AD"].width = 22
-    worksheet.column_dimensions["AG"].width = 12
-    worksheet.column_dimensions["AH"].width = 16
-    worksheet.column_dimensions["AI"].width = 16
+    worksheet.column_dimensions["AC"].width = 18
+    worksheet.column_dimensions["AD"].width = 18
+    worksheet.column_dimensions["AE"].width = 22
+    worksheet.column_dimensions["AH"].width = 36
+    worksheet.column_dimensions["AI"].width = 36
+    worksheet.column_dimensions["AJ"].width = 24
+    worksheet.column_dimensions["AK"].width = 22
+    worksheet.column_dimensions["AL"].width = 48
+    worksheet.column_dimensions["AN"].width = 28
+    worksheet.column_dimensions["AO"].width = 26
+    worksheet.column_dimensions["AP"].width = 12
+    worksheet.column_dimensions["AQ"].width = 16
+    worksheet.column_dimensions["AR"].width = 16
 
 
 def create_teacher_training_admissions_sheet(workbook: Workbook) -> None:

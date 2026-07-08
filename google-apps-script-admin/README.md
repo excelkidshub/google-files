@@ -15,6 +15,7 @@ These files are meant to be created as separate files inside the same Google App
 - `08_Expenses.gs`
 - `09_PaymentEmails.gs`
 - `10_TeacherTraining.gs`
+- `11_AdmissionCertificates.gs`
 
 ## Script Properties
 
@@ -23,6 +24,7 @@ Set these in Apps Script:
 - `ADMIN_PASSWORD`
 - `ADMIN_TOKEN`
 - `RECEIPT_TEMPLATE_ID` or `RECEIPT_TEMPLATE_NAME`
+- `STUDENT_CERTIFICATE_TEMPLATE_ID` or `STUDENT_CERTIFICATE_TEMPLATE_NAME`
 - `TEACHER_CERTIFICATE_TEMPLATE_ID` or `TEACHER_CERTIFICATE_TEMPLATE_NAME`
 
 Optional for the Vercel website project:
@@ -32,6 +34,7 @@ Optional for the Vercel website project:
 Optional but recommended:
 
 - `RECEIPT_ARCHIVE_FOLDER_ID`
+- `STUDENT_CERTIFICATE_ARCHIVE_FOLDER_ID`
 - `TEACHER_CERTIFICATE_ARCHIVE_FOLDER_ID`
 - `ACADEMY_NAME`
 - `ACADEMY_EMAIL`
@@ -57,6 +60,8 @@ Admin:
 - `assignStudentToBatch`
 - `savePayment`
 - `sendPaymentEmail`
+- `sendAdmissionCertificate`
+- `sendAdmissionCertificateWhatsApp`
 - `getPayments`
 - `saveExpense`
 - `getExpenses`
@@ -119,6 +124,19 @@ Admin:
 - `Referral Type`
 - `Referrer Name`
 - `Created Date`
+- `Send Certificate`
+- `Certificate Status`
+- `Certificate Number`
+- `Certificate Issue Date`
+- `Certificate Sent Date`
+- `Certificate PDF URL`
+- `Certificate Image URL`
+- `Send Certificate WhatsApp`
+- `Certificate WhatsApp Status`
+- `Certificate WhatsApp Link`
+- `Certificate WhatsApp Sent Date`
+- `Certificate WhatsApp Error`
+- `Certificate Error`
 - `Notes`
 
 ### batches
@@ -187,6 +205,47 @@ Manual teacher-training receipt flow:
 2. The `onEdit` trigger marks `Receipt Status = Pending`
 3. Run `processPendingTeacherTrainingReceipts()` by time trigger or manually
 4. The script sends the receipt and writes `Receipt Status = Email Sent`
+
+Manual admissions certificate email flow:
+
+1. Upload `Certificate_template.pptx` to Google Drive
+2. Open it with Google Slides and save/convert it as a Google Slides file
+3. Set `STUDENT_CERTIFICATE_TEMPLATE_ID` to that Slides file ID
+4. In `admissions`, set `Send Certificate = Send`
+5. Run `processPendingAdmissionCertificates()` by time trigger or manually
+6. The script generates a PDF and PNG image, emails the PDF, writes Drive links, and updates only certificate email/status fields
+
+Manual admissions certificate WhatsApp flow:
+
+1. In `admissions`, set `Send Certificate WhatsApp = Send`
+2. Run `processPendingAdmissionCertificateWhatsApps()` by time trigger or manually
+3. The script generates the certificate image and writes `Certificate WhatsApp Link`
+4. Open `Certificate WhatsApp Link`; WhatsApp opens with a pre-filled message containing the certificate image link
+5. Send the message manually
+6. After sending, set `Certificate WhatsApp Status = Sent`; the `onEdit` trigger writes `Certificate WhatsApp Sent Date`
+
+WhatsApp note:
+
+- Email and WhatsApp are separate triggers. WhatsApp link generation failures do not block certificate email sending.
+- This is the free semi-automatic flow. It does not require WhatsApp Business API keys or Meta billing.
+- Normal WhatsApp links cannot auto-attach or auto-send the image; they open a pre-filled message for you to send.
+
+Supported student certificate placeholders:
+
+- `{{NAME}}`
+- `{{STUDENT}}`
+- `{{STUDENT_NAME}}`
+- `{{PARENT_NAME}}`
+- `{{COURSE}}`
+- `{{LEVEL}}`
+- `{{MODE}}`
+- `{{BATCH_CODE}}`
+- `{{DATE}}`
+- `{{ISSUE_DATE}}`
+- `{{CERTIFICATE_NO}}`
+- `{{CERTIFICATE_NUMBER}}`
+- `{{ADMISSION_ID}}`
+- `{{ACADEMY_NAME}}`
 
 Manual teacher-training certificate flow:
 

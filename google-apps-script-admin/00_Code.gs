@@ -59,6 +59,14 @@ function doPost(e) {
       return sendPaymentEmail(payload);
     }
 
+    if (action === "sendAdmissionCertificate") {
+      return sendAdmissionCertificate(payload);
+    }
+
+    if (action === "sendAdmissionCertificateWhatsApp") {
+      return sendAdmissionCertificateWhatsApp(payload);
+    }
+
     if (action === "saveExpense") {
       return saveExpense(payload);
     }
@@ -99,16 +107,50 @@ function onEdit(e) {
     const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     let sendReceiptColIndex = -1;
     let receiptStatusColIndex = -1;
+    let sendCertificateWhatsAppColIndex = -1;
+    let certificateWhatsAppStatusColIndex = -1;
+    let certificateWhatsAppSentDateColIndex = -1;
+    let certificateWhatsAppErrorColIndex = -1;
     let admissionIdColIndex = -1;
 
     headerRow.forEach(function(header, index) {
       const cleanHeader = clean(header);
+      if (cleanHeader === "Send Certificate WhatsApp") sendCertificateWhatsAppColIndex = index + 1;
+      if (cleanHeader === "Certificate WhatsApp Status") certificateWhatsAppStatusColIndex = index + 1;
+      if (cleanHeader === "Certificate WhatsApp Sent Date") certificateWhatsAppSentDateColIndex = index + 1;
+      if (cleanHeader === "Certificate WhatsApp Error") certificateWhatsAppErrorColIndex = index + 1;
       if (cleanHeader === "Send Receipt") sendReceiptColIndex = index + 1;
       if (cleanHeader === "Receipt Status") receiptStatusColIndex = index + 1;
       if (cleanHeader === "Admission ID") admissionIdColIndex = index + 1;
     });
 
-    Logger.log("Found columns - Send Receipt: " + sendReceiptColIndex + ", Receipt Status: " + receiptStatusColIndex + ", Admission ID: " + admissionIdColIndex);
+    Logger.log("Found columns - Send Certificate WhatsApp: " + sendCertificateWhatsAppColIndex + ", Certificate WhatsApp Status: " + certificateWhatsAppStatusColIndex + ", Send Receipt: " + sendReceiptColIndex + ", Receipt Status: " + receiptStatusColIndex + ", Admission ID: " + admissionIdColIndex);
+
+    if (range.getColumn() === sendCertificateWhatsAppColIndex) {
+      const cellValue = clean(range.getValue());
+
+      if (cellValue === "Send") {
+        const rowNumber = range.getRow();
+
+        if (certificateWhatsAppStatusColIndex > 0) {
+          sheet.getRange(rowNumber, certificateWhatsAppStatusColIndex).setValue("Pending");
+        }
+
+        if (certificateWhatsAppErrorColIndex > 0) {
+          sheet.getRange(rowNumber, certificateWhatsAppErrorColIndex).setValue("");
+        }
+      }
+
+      return;
+    }
+
+    if (range.getColumn() === certificateWhatsAppStatusColIndex) {
+      if (clean(range.getValue()) === "Sent" && certificateWhatsAppSentDateColIndex > 0) {
+        sheet.getRange(range.getRow(), certificateWhatsAppSentDateColIndex).setValue(new Date());
+      }
+
+      return;
+    }
 
     // Check if this edit is in the "Send Receipt" column
     if (range.getColumn() === sendReceiptColIndex) {
@@ -392,10 +434,19 @@ function processQueuedAdmission(payload, admissionsSheet) {
       "",
       "",
       createdDate,
+      "", // Send Certificate
       "", // Certificate Status
       "", // Certificate Number
       "", // Certificate Issue Date
       "", // Certificate Sent Date
+      "", // Certificate PDF URL
+      "", // Certificate Image URL
+      "", // Send Certificate WhatsApp
+      "", // Certificate WhatsApp Status
+      "", // Certificate WhatsApp Link
+      "", // Certificate WhatsApp Sent Date
+      "", // Certificate WhatsApp Error
+      "", // Certificate Error
       "", // Send Receipt
       "", // Receipt Status
       "Pending-New" // Notification Status
