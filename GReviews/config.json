@@ -1,0 +1,27 @@
+{
+  "google_business_profile": {
+    "account_id": "6826894258160505115",
+    "location_id": "",
+    "location_name": "ExcelKidsHub"
+  },
+  "paths": {
+    "credentials_dir": "credentials",
+    "data_dir": "data",
+    "backup_dir": "data/backup",
+    "snapshots_dir": "data/snapshots",
+    "reports_dir": "reports",
+    "logs_dir": "logs",
+    "main_excel_file": "data/google_reviews.xlsx",
+    "log_file": "logs/reviews.log"
+  },
+  "api": {
+    "credentials_file": "credentials/client_secret.json",
+    "token_file": "credentials/token.json",
+    "scopes": [
+      "https://www.googleapis.com/auth/business.manage"
+    ]
+  },
+  "discovery": {
+    "auto_discover": true
+  }
+}
