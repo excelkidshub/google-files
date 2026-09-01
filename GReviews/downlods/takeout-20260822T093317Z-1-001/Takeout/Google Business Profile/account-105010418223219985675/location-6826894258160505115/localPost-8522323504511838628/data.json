@@ -1,0 +1,36 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/8522323504511838628",
+  "languageCode": "en",
+  "summary": "New batches starting from 1st December both online and offline.",
+  "callToAction": {
+    "actionType": "CALL"
+  },
+  "state": "LIVE",
+  "event": {
+    "title": "Basic to Advance Phonics",
+    "schedule": {
+      "startDate": {
+        "year": 2025,
+        "month": 12,
+        "day": 1
+      },
+      "startTime": {
+        "hours": 6
+      },
+      "endDate": {
+        "year": 2026,
+        "month": 3,
+        "day": 28
+      },
+      "endTime": {
+        "hours": 9
+      }
+    }
+  },
+  "updateTime": "2025-11-28T07:35:34.589810Z",
+  "createTime": "2025-11-28T07:34:20.868428Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKELH5x-CPlviJKw",
+  "expirationTime": "2026-03-28T03:30:00Z",
+  "topicType": "EVENT"
+}

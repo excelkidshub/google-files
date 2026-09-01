@@ -130,12 +130,12 @@ function getPaymentEmailContext(admissionsSheet, paymentsSheet, admissionId, pay
 }
 
 function getReceiptTemplateFile() {
-  const templateId = getScriptProperty(SCRIPT_PROPERTY_KEYS.receiptTemplateId) || DEFAULTS.receiptTemplateId;
+  const templateId = getScriptProperty("RECEIPT_TEMPLATE_ID") || DEFAULTS.receiptTemplateId;
   if (templateId) {
     return DriveApp.getFileById(templateId);
   }
 
-  const templateName = getScriptProperty(SCRIPT_PROPERTY_KEYS.receiptTemplateName) || DEFAULTS.receiptTemplateName;
+  const templateName = getScriptProperty("RECEIPT_TEMPLATE_NAME") || DEFAULTS.receiptTemplateName;
   const matches = DriveApp.getFilesByName(templateName);
 
   if (matches.hasNext()) {
@@ -162,7 +162,7 @@ function buildReceiptPdfBlob(templateFile, templateValues) {
   document.saveAndClose();
 
   const pdfBlob = workingCopy.getAs(MimeType.PDF).setName(copyName + ".pdf");
-  const archiveFolderId = getScriptProperty(SCRIPT_PROPERTY_KEYS.receiptArchiveFolderId);
+  const archiveFolderId = getScriptProperty("RECEIPT_ARCHIVE_FOLDER_ID");
 
   if (archiveFolderId) {
     DriveApp.getFolderById(archiveFolderId).createFile(pdfBlob.copyBlob());
@@ -173,11 +173,11 @@ function buildReceiptPdfBlob(templateFile, templateValues) {
 }
 
 function buildPaymentEmailMeta(emailType, context) {
-  const academyName = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyName) || DEFAULTS.academyName;
-  const academyEmail = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyEmail) || DEFAULTS.academyEmail;
-  const academyPhone = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyPhone) || DEFAULTS.academyPhone;
-  const academyAddress = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyAddress) || DEFAULTS.academyAddress;
-  const senderName = getScriptProperty(SCRIPT_PROPERTY_KEYS.senderName) || DEFAULTS.senderName;
+  const academyName = getScriptProperty("ACADEMY_NAME") || DEFAULTS.academyName;
+  const academyEmail = getScriptProperty("ACADEMY_EMAIL") || DEFAULTS.academyEmail;
+  const academyPhone = getScriptProperty("ACADEMY_PHONE") || DEFAULTS.academyPhone;
+  const academyAddress = getScriptProperty("ACADEMY_ADDRESS") || DEFAULTS.academyAddress;
+  const senderName = getScriptProperty("SENDER_NAME") || DEFAULTS.senderName;
   const admission = context.admission;
   const payment = context.payment || {};
   const financials = context.financials;

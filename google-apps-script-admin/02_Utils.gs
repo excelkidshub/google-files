@@ -26,7 +26,16 @@ function isTruthy(value) {
 }
 
 function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (!email || typeof email !== 'string') {
+    return false;
+  }
+  const emailStr = email.trim();
+  if (emailStr.length === 0 || emailStr.length > 254) {
+    return false;
+  }
+  // More robust email validation
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return emailRegex.test(emailStr);
 }
 
 function getScriptProperty(key) {

@@ -1,0 +1,37 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/9201167247021240683",
+  "languageCode": "en",
+  "summary": "Admissions Open for Phonics Classes in Dhanori Pune!\n\nExcelKidsHub Phonics Institute is खुश to announce a new batch for children aged 3+ years. Our structured phonics program focuses on improving reading, writing, pronunciation, and spelling skills from the foundation level.\n\nWith personalized attention and proven teaching methods, we help children become confident and independent readers.\n\n📍 Location: Dhanori, Pune\n📚 Program: Phonics \u0026 Early Literacy Development\n👩‍🏫 Trained \u0026 Experienced Faculty\n⏰ Limited Seats Available\n\n👉 Book your seat now and give your child a strong start in learning!",
+  "callToAction": {
+    "actionType": "CALL"
+  },
+  "state": "LIVE",
+  "event": {
+    "title": "Phonics Classes Admission Open in Dhanori Pune – ExcelKids",
+    "schedule": {
+      "startDate": {
+        "year": 2026,
+        "month": 4,
+        "day": 10
+      },
+      "startTime": {
+        "hours": 11
+      },
+      "endDate": {
+        "year": 2026,
+        "month": 5,
+        "day": 31
+      },
+      "endTime": {
+        "hours": 8,
+        "minutes": 30
+      }
+    }
+  },
+  "updateTime": "2026-03-17T16:50:17.856917Z",
+  "createTime": "2026-03-17T16:50:17.856917Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKEKKyov-Hp9bWVQ",
+  "expirationTime": "2026-05-31T03:00:00Z",
+  "topicType": "EVENT"
+}

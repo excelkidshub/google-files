@@ -1,0 +1,36 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/3419901577347941473",
+  "languageCode": "en",
+  "summary": "Empowering young learners with confidence and joy!\n \nNew Online \u0026 Offline Batches *Starting 1st July 2025*\n Limited Seats – Only 10 learner’s per batch!\n\n Why Choose Us?\n• *Reading Library* – Access for enrolled phonics students\n• *Basic Level* – For beginners (Age 3.5 to 6 years)\n• *Advanced Level* – For children struggling with reading (Age 5+)\n• *Proficient Level* – For children struggling with writing (Age 5+)\n• *Grammar Classes* – For all age groups\n• *Phonics Training* – For parents \u0026 aspiring teachers\n *Small group. Individual attention. Big results.*\n\n Trainer: Swati Deshmukh (UK Phonics \u0026 ISO Certified)*\n Contact: 8793135679",
+  "callToAction": {
+    "actionType": "CALL"
+  },
+  "state": "REJECTED",
+  "event": {
+    "title": "🔔 July’25 Phonics Admissions",
+    "schedule": {
+      "startDate": {
+        "year": 2025,
+        "month": 7,
+        "day": 1
+      },
+      "startTime": {
+        "hours": 15
+      },
+      "endDate": {
+        "year": 2025,
+        "month": 8,
+        "day": 31
+      },
+      "endTime": {
+        "hours": 20
+      }
+    }
+  },
+  "updateTime": "2025-06-21T19:19:42.008757Z",
+  "createTime": "2025-06-21T19:19:42.008757Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKEM3j7Zap4ZOBcw",
+  "expirationTime": "2025-08-31T14:30:00Z",
+  "topicType": "EVENT"
+}

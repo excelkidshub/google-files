@@ -1,0 +1,33 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/2606773939694733121",
+  "languageCode": "en",
+  "summary": "Phonics Training program",
+  "state": "LIVE",
+  "event": {
+    "title": "Parents Teacher Training",
+    "schedule": {
+      "startDate": {
+        "year": 2025,
+        "month": 6,
+        "day": 2
+      },
+      "startTime": {
+        "hours": 2
+      },
+      "endDate": {
+        "year": 2025,
+        "month": 6,
+        "day": 6
+      },
+      "endTime": {
+        "hours": 4
+      }
+    }
+  },
+  "updateTime": "2025-05-22T10:24:33.994475Z",
+  "createTime": "2025-05-22T10:24:33.994475Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKELXsgar7nLHEjQE",
+  "expirationTime": "2025-06-05T22:30:00Z",
+  "topicType": "EVENT"
+}

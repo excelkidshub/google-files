@@ -2,7 +2,7 @@
 REM Google Business Profile Reviews Backup
 REM This script runs the Google reviews backup application
 
-cd /d "D:\Git_ExcelKidsHub\google-files\GReviews"
+cd /d "C:\application\AI_Project\ExcelKidsHub\google-files\GReviews"
 
 echo ========================================
 echo ExcelKidsHub Google Reviews Backup
@@ -42,12 +42,7 @@ if %errorlevel% neq 0 (
     echo Dependencies not installed.
     echo Installing dependencies...
     pip install -r requirements.txt
-    if %errorlevel% neq 0 (
-        echo ERROR: Failed to install dependencies
-        pause
-        exit /b 1
-    )
-    echo Dependencies installed successfully.
+    echo Dependencies installed.
     echo.
 )
 

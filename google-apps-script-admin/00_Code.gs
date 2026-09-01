@@ -102,11 +102,16 @@ function onEdit(e) {
       Logger.log("Not admissions sheet, skipping");
       return;
     }
+    
+    Logger.log("Processing admissions sheet edit");
 
     // Get column headers
     const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     let sendReceiptColIndex = -1;
     let receiptStatusColIndex = -1;
+    let sendCertificateColIndex = -1;
+    let certificateStatusColIndex = -1;
+    let certificateErrorColIndex = -1;
     let sendCertificateWhatsAppColIndex = -1;
     let certificateWhatsAppStatusColIndex = -1;
     let certificateWhatsAppSentDateColIndex = -1;
@@ -115,6 +120,9 @@ function onEdit(e) {
 
     headerRow.forEach(function(header, index) {
       const cleanHeader = clean(header);
+      if (cleanHeader === "Send Certificate") sendCertificateColIndex = index + 1;
+      if (cleanHeader === "Certificate Status") certificateStatusColIndex = index + 1;
+      if (cleanHeader === "Certificate Error") certificateErrorColIndex = index + 1;
       if (cleanHeader === "Send Certificate WhatsApp") sendCertificateWhatsAppColIndex = index + 1;
       if (cleanHeader === "Certificate WhatsApp Status") certificateWhatsAppStatusColIndex = index + 1;
       if (cleanHeader === "Certificate WhatsApp Sent Date") certificateWhatsAppSentDateColIndex = index + 1;
@@ -124,7 +132,8 @@ function onEdit(e) {
       if (cleanHeader === "Admission ID") admissionIdColIndex = index + 1;
     });
 
-    Logger.log("Found columns - Send Certificate WhatsApp: " + sendCertificateWhatsAppColIndex + ", Certificate WhatsApp Status: " + certificateWhatsAppStatusColIndex + ", Send Receipt: " + sendReceiptColIndex + ", Receipt Status: " + receiptStatusColIndex + ", Admission ID: " + admissionIdColIndex);
+    Logger.log("Found columns - Send Certificate: " + sendCertificateColIndex + ", Certificate Status: " + certificateStatusColIndex + ", Send Certificate WhatsApp: " + sendCertificateWhatsAppColIndex + ", Certificate WhatsApp Status: " + certificateWhatsAppStatusColIndex + ", Send Receipt: " + sendReceiptColIndex + ", Receipt Status: " + receiptStatusColIndex + ", Admission ID: " + admissionIdColIndex);
+    Logger.log("Edited column: " + range.getColumn() + ", Send Certificate column index: " + sendCertificateColIndex);
 
     if (range.getColumn() === sendCertificateWhatsAppColIndex) {
       const cellValue = clean(range.getValue());
@@ -151,6 +160,53 @@ function onEdit(e) {
 
       return;
     }
+
+    // Check if this edit is in the "Send Certificate" column
+    if (range.getColumn() === sendCertificateColIndex) {
+      const cellValue = clean(range.getValue());
+      Logger.log("Edit in Send Certificate column. Value: '" + cellValue + "'");
+
+      if (cellValue === "Send") {
+        const rowNumber = range.getRow();
+        const admissionId = clean(sheet.getRange(rowNumber, admissionIdColIndex).getValue());
+
+        Logger.log("Send Certificate = 'Send' - Admission: " + admissionId + ", Row: " + rowNumber);
+
+        if (!admissionId) {
+          Logger.log("ERROR: Admission ID is empty");
+          if (certificateStatusColIndex > 0) {
+            sheet.getRange(rowNumber, certificateStatusColIndex).setValue("Failed - No Admission ID");
+          }
+          return;
+        }
+
+        if (certificateStatusColIndex <= 0) {
+          Logger.log("ERROR: Certificate Status column not found");
+          return;
+        }
+
+        // Mark as pending so the batch process can handle it
+        Logger.log("Marking row " + rowNumber + " as pending for certificate processing");
+        sheet.getRange(rowNumber, certificateStatusColIndex).setValue("Pending");
+        
+        if (certificateErrorColIndex > 0) {
+          sheet.getRange(rowNumber, certificateErrorColIndex).setValue("");
+        }
+      } else if (cellValue === "" || cellValue === null) {
+        // If Send Certificate is cleared, reset status if it was pending
+        const rowNumber = range.getRow();
+        const currentStatus = certificateStatusColIndex > 0 ? clean(sheet.getRange(rowNumber, certificateStatusColIndex).getValue()) : "";
+        
+        if (currentStatus === "Pending") {
+          Logger.log("Send Certificate cleared - resetting status from Pending to empty");
+          sheet.getRange(rowNumber, certificateStatusColIndex).setValue("");
+        }
+      }
+
+      return;
+    }
+    
+    Logger.log("Column " + range.getColumn() + " does not match Send Certificate column (" + sendCertificateColIndex + ") or other tracked columns");
 
     // Check if this edit is in the "Send Receipt" column
     if (range.getColumn() === sendReceiptColIndex) {
@@ -179,6 +235,15 @@ function onEdit(e) {
         // Mark as pending so the batch process can handle it
         Logger.log("Marking row " + rowNumber + " as pending for email processing");
         sheet.getRange(rowNumber, receiptStatusColIndex).setValue("Pending");
+      } else if (cellValue === "" || cellValue === null) {
+        // If Send Receipt is cleared, reset status if it was pending
+        const rowNumber = range.getRow();
+        const currentStatus = receiptStatusColIndex > 0 ? clean(sheet.getRange(rowNumber, receiptStatusColIndex).getValue()) : "";
+        
+        if (currentStatus === "Pending") {
+          Logger.log("Send Receipt cleared - resetting status from Pending to empty");
+          sheet.getRange(rowNumber, receiptStatusColIndex).setValue("");
+        }
       }
     }
   } catch (error) {
@@ -260,11 +325,33 @@ function processPendingEmailsFromMaster() {
   }
 }
 
+function processPendingCertificatesFromMaster() {
+  try {
+    Logger.log("=== Processing Pending Certificates ===");
+    Logger.log("Starting time: " + new Date().toISOString());
+    processPendingAdmissionCertificates();
+    Logger.log("=== Completed Processing Pending Certificates ===");
+    Logger.log("Ending time: " + new Date().toISOString());
+  } catch (error) {
+    const errorMsg = error && error.message ? error.message : "Unknown error";
+    Logger.log("processPendingCertificatesFromMaster error: " + errorMsg);
+    Logger.log("Error stack: " + (error.stack || "No stack trace available"));
+    // Send email notification for critical errors
+    try {
+      const adminEmail = getScriptProperty("ADMIN_EMAIL") || DEFAULTS.adminEmail;
+      GmailApp.sendEmail(adminEmail, "CRITICAL: Certificate Processing Error", 
+        "Certificate processing failed with error: " + errorMsg + "\n\nTime: " + new Date().toISOString());
+    } catch (emailError) {
+      Logger.log("Failed to send error notification email: " + emailError.message);
+    }
+  }
+}
+
 function testReceiptTemplate() {
   try {
     Logger.log("Testing Receipt Template...");
     
-    const templateId = getScriptProperty(SCRIPT_PROPERTY_KEYS.receiptTemplateId) || DEFAULTS.receiptTemplateId;
+    const templateId = getScriptProperty("RECEIPT_TEMPLATE_ID") || DEFAULTS.receiptTemplateId;
     Logger.log("Template ID from configuration: " + templateId);
     
     const templateFile = getReceiptTemplateFile();
@@ -687,9 +774,9 @@ function buildAdmissionRecordForEmail(rowData, headers) {
 
 function sendAdmissionNotificationEmail(admissionId, studentName, parentName, parentEmail, mobile, studentRecord, isUpdate) {
   try {
-    const adminEmail = getScriptProperty(SCRIPT_PROPERTY_KEYS.adminEmail) || "excelkidshub.edu@gmail.com";
-    const academyName = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyName) || DEFAULTS.academyName;
-    const academyPhone = getScriptProperty(SCRIPT_PROPERTY_KEYS.academyPhone) || DEFAULTS.academyPhone;
+    const adminEmail = getScriptProperty("ADMIN_EMAIL") || DEFAULTS.adminEmail;
+    const academyName = getScriptProperty("ACADEMY_NAME") || DEFAULTS.academyName;
+    const academyPhone = getScriptProperty("ACADEMY_PHONE") || DEFAULTS.academyPhone;
     
     Logger.log("Sending " + (isUpdate ? "update" : "new registration") + " notification email from " + Session.getActiveUser().getEmail() + " to " + adminEmail);
     

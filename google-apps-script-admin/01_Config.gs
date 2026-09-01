@@ -9,6 +9,7 @@ var SHEET_NAMES = {
 var SCRIPT_PROPERTY_KEYS = {
   adminPassword: "ADMIN_PASSWORD",
   adminToken: "ADMIN_TOKEN",
+  adminEmail: "ADMIN_EMAIL",
   receiptTemplateId: "RECEIPT_TEMPLATE_ID",
   receiptTemplateName: "RECEIPT_TEMPLATE_NAME",
   receiptArchiveFolderId: "RECEIPT_ARCHIVE_FOLDER_ID",
@@ -37,5 +38,6 @@ var DEFAULTS = {
   academyEmail: "excelkidshub.edu@gmail.com",
   academyPhone: "+91 8793135679",
   academyAddress: "Inside Lakewood Preschool, Dhanori, Pune",
-  senderName: "ExcelKidsHub Phonics Academy"
+  senderName: "ExcelKidsHub Phonics Academy",
+  adminEmail: "excelkidshub.edu@gmail.com"
 };

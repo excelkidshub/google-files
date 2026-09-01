@@ -1,7 +1,7 @@
 function adminLogin(payload) {
   const providedPassword = clean(payload.adminPassword);
-  const expectedPassword = getScriptProperty(SCRIPT_PROPERTY_KEYS.adminPassword);
-  const adminToken = getScriptProperty(SCRIPT_PROPERTY_KEYS.adminToken);
+  const expectedPassword = getScriptProperty("ADMIN_PASSWORD");
+  const adminToken = getScriptProperty("ADMIN_TOKEN");
 
   if (!expectedPassword) {
     throw new Error("ADMIN_PASSWORD is not configured in Script Properties");
@@ -24,7 +24,7 @@ function adminLogin(payload) {
 
 function authorizeAdmin(payload) {
   const adminToken = clean(payload.adminToken);
-  const expectedToken = getScriptProperty(SCRIPT_PROPERTY_KEYS.adminToken);
+  const expectedToken = getScriptProperty("ADMIN_TOKEN");
 
   if (!expectedToken) {
     throw new Error("ADMIN_TOKEN is not configured in Script Properties");

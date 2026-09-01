@@ -1,0 +1,36 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/5522077769242472161",
+  "languageCode": "en",
+  "summary": "Next batch loading secure your spot now before it gets full.",
+  "callToAction": {
+    "actionType": "CALL"
+  },
+  "state": "LIVE",
+  "event": {
+    "title": "Phonics Admission open now",
+    "schedule": {
+      "startDate": {
+        "year": 2025,
+        "month": 7,
+        "day": 17
+      },
+      "startTime": {
+        "hours": 2
+      },
+      "endDate": {
+        "year": 2025,
+        "month": 8,
+        "day": 31
+      },
+      "endTime": {
+        "hours": 8
+      }
+    }
+  },
+  "updateTime": "2025-07-17T04:29:55.004811Z",
+  "createTime": "2025-07-17T04:29:55.004811Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKEMyBnva9vbni8wE",
+  "expirationTime": "2025-08-31T02:30:00Z",
+  "topicType": "EVENT"
+}

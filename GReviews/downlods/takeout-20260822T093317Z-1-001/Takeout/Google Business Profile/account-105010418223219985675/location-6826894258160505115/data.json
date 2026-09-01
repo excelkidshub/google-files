@@ -1,0 +1,276 @@
+{
+  "name": "locations/6826894258160505115",
+  "languageCode": "en",
+  "title": "ExcelKidsHub Phonics Academy",
+  "phoneNumbers": {
+    "primaryPhone": "087931 35679"
+  },
+  "categories": {
+    "primaryCategory": {
+      "name": "categories/gcid:education_center",
+      "displayName": "Education Centre",
+      "serviceTypes": [{
+        "serviceTypeId": "job_type_id:adult_lessons",
+        "displayName": "Adult lessons"
+      }, {
+        "serviceTypeId": "job_type_id:kindergarten",
+        "displayName": "Kindergarten"
+      }, {
+        "serviceTypeId": "job_type_id:secondary_education",
+        "displayName": "Secondary education"
+      }, {
+        "serviceTypeId": "job_type_id:special_needs",
+        "displayName": "Special needs"
+      }, {
+        "serviceTypeId": "job_type_id:tutoring",
+        "displayName": "Tutoring"
+      }],
+      "moreHoursTypes": [{
+        "hoursTypeId": "ACCESS",
+        "displayName": "Access",
+        "localizedDisplayName": "Access"
+      }, {
+        "hoursTypeId": "BREAKFAST",
+        "displayName": "Breakfast",
+        "localizedDisplayName": "Breakfast"
+      }, {
+        "hoursTypeId": "BRUNCH",
+        "displayName": "Brunch",
+        "localizedDisplayName": "Brunch"
+      }, {
+        "hoursTypeId": "DELIVERY",
+        "displayName": "Delivery",
+        "localizedDisplayName": "Delivery"
+      }, {
+        "hoursTypeId": "DINNER",
+        "displayName": "Dinner",
+        "localizedDisplayName": "Dinner"
+      }, {
+        "hoursTypeId": "DRIVE_THROUGH",
+        "displayName": "Drive through",
+        "localizedDisplayName": "Drive through"
+      }, {
+        "hoursTypeId": "HAPPY_HOUR",
+        "displayName": "Happy hours",
+        "localizedDisplayName": "Happy hours"
+      }, {
+        "hoursTypeId": "KITCHEN",
+        "displayName": "Kitchen",
+        "localizedDisplayName": "Kitchen"
+      }, {
+        "hoursTypeId": "LUNCH",
+        "displayName": "Lunch",
+        "localizedDisplayName": "Lunch"
+      }, {
+        "hoursTypeId": "ONLINE_SERVICE_HOURS",
+        "displayName": "Online service hours",
+        "localizedDisplayName": "Online service hours"
+      }, {
+        "hoursTypeId": "PICKUP",
+        "displayName": "Pickup",
+        "localizedDisplayName": "Pickup"
+      }, {
+        "hoursTypeId": "TAKEOUT",
+        "displayName": "Takeout",
+        "localizedDisplayName": "Takeout"
+      }, {
+        "hoursTypeId": "SENIOR_HOURS",
+        "displayName": "Senior hours",
+        "localizedDisplayName": "Senior hours"
+      }]
+    },
+    "additionalCategories": [{
+      "name": "categories/gcid:coaching_center",
+      "displayName": "Coaching Center",
+      "moreHoursTypes": [{
+        "hoursTypeId": "ACCESS",
+        "displayName": "Access",
+        "localizedDisplayName": "Access"
+      }, {
+        "hoursTypeId": "BREAKFAST",
+        "displayName": "Breakfast",
+        "localizedDisplayName": "Breakfast"
+      }, {
+        "hoursTypeId": "BRUNCH",
+        "displayName": "Brunch",
+        "localizedDisplayName": "Brunch"
+      }, {
+        "hoursTypeId": "DELIVERY",
+        "displayName": "Delivery",
+        "localizedDisplayName": "Delivery"
+      }, {
+        "hoursTypeId": "DINNER",
+        "displayName": "Dinner",
+        "localizedDisplayName": "Dinner"
+      }, {
+        "hoursTypeId": "DRIVE_THROUGH",
+        "displayName": "Drive through",
+        "localizedDisplayName": "Drive through"
+      }, {
+        "hoursTypeId": "HAPPY_HOUR",
+        "displayName": "Happy hours",
+        "localizedDisplayName": "Happy hours"
+      }, {
+        "hoursTypeId": "KITCHEN",
+        "displayName": "Kitchen",
+        "localizedDisplayName": "Kitchen"
+      }, {
+        "hoursTypeId": "LUNCH",
+        "displayName": "Lunch",
+        "localizedDisplayName": "Lunch"
+      }, {
+        "hoursTypeId": "ONLINE_SERVICE_HOURS",
+        "displayName": "Online service hours",
+        "localizedDisplayName": "Online service hours"
+      }, {
+        "hoursTypeId": "PICKUP",
+        "displayName": "Pickup",
+        "localizedDisplayName": "Pickup"
+      }, {
+        "hoursTypeId": "TAKEOUT",
+        "displayName": "Takeout",
+        "localizedDisplayName": "Takeout"
+      }, {
+        "hoursTypeId": "SENIOR_HOURS",
+        "displayName": "Senior hours",
+        "localizedDisplayName": "Senior hours"
+      }]
+    }]
+  },
+  "storefrontAddress": {
+    "regionCode": "IN",
+    "languageCode": "en",
+    "postalCode": "411015",
+    "administrativeArea": "Maharashtra",
+    "locality": "Pune",
+    "addressLines": ["ExcelKidsHub, Lakewook PreSchool, Leela Heights,Lane no 1, Siddharth Nagar", "Dhanori"]
+  },
+  "websiteUri": "https://excelkidshub.in/",
+  "regularHours": {
+    "periods": [{
+      "openDay": "SUNDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "SUNDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "MONDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "MONDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "TUESDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "TUESDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "WEDNESDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "WEDNESDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "THURSDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "THURSDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "FRIDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "FRIDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }, {
+      "openDay": "SATURDAY",
+      "openTime": {
+        "hours": 9
+      },
+      "closeDay": "SATURDAY",
+      "closeTime": {
+        "hours": 21
+      }
+    }]
+  },
+  "specialHours": {
+  },
+  "serviceArea": {
+    "businessType": "CUSTOMER_AND_BUSINESS_LOCATION",
+    "places": {
+      "placeInfos": [{
+        "placeName": "Dhanori, Pune, Maharashtra, India",
+        "placeId": "ChIJoWI_ndbGwjsRhUK1modWhKE"
+      }]
+    },
+    "regionCode": "IN"
+  },
+  "adWordsLocationExtensions": {
+  },
+  "latlng": {
+    "latitude": 18.59829,
+    "longitude": 73.906103
+  },
+  "openInfo": {
+    "status": "OPEN",
+    "canReopen": true,
+    "openingDate": {
+      "year": 2019,
+      "month": 1
+    }
+  },
+  "metadata": {
+    "placeId": "ChIJhdSs1RTHwjsRLU-JwrOAea8"
+  },
+  "profile": {
+    "description": "Help your child read with confidence at ExcelKidsHub Phonics Academy, Dhanori\u0027s trusted center for early literacy. We are an ISO 9001:2015 certified and MSME (Udyam) registered institute building strong English foundations.\nLed by Certified Trainer Swati Deshmukh, we use the proven Jolly Phonics method to help children (ages 4–12) read fluently and master grammar naturally.\nWhy Parents Trust Us:\n✅ Expert Guidance: Taught by a certified professional.\n✅ Personalized Attention: Small batches ensure no child is left behind.\n✅ Flexible Learning: Offline classes in Pune (Dhanori) \u0026 interactive online sessions globally.\n✅ Visible Results: Improved pronunciation, spelling, and speed.\n📞 Contact us today for a Free Assessment!"
+  },
+  "relationshipData": {
+    "parentLocation": {
+    }
+  },
+  "serviceItems": [{
+    "freeFormServiceItem": {
+      "category": "categories/gcid:education_center",
+      "label": {
+        "displayName": "Jolly Phonics classes",
+        "description": "Give your child the power of reading and writing with Jolly Phonics – a fun and effective way to build strong literacy skills! At Excel Kids Hub, we offer specialized Jolly Phonics Classes designed to help children develop a solid foundation in English through a structured, multi-sensory approach."
+      }
+    }
+  }, {
+    "freeFormServiceItem": {
+      "category": "categories/gcid:education_center",
+      "label": {
+        "displayName": "Grammar Classes",
+        "description": "At ExcelKidsHub, we make grammar easy and enjoyable with a structured and interactive learning approach. Our Grammar Classes are designed to help students build a strong foundation in English, improving their writing, speaking, and comprehension skills."
+      }
+    }
+  }, {
+    "freeFormServiceItem": {
+      "category": "categories/gcid:education_center",
+      "label": {
+        "displayName": "Jolly Phonics Teacher Training and Certification",
+        "description": "At ExcelKidsHub, we offer Jolly Phonics Training for teachers and parents, empowering them with effective phonics-based teaching methods to enhance children’s reading and writing skills. Our training comes with an ISO-certified certification, ensuring high-quality learning and global recognition."
+      }
+    }
+  }]
+}

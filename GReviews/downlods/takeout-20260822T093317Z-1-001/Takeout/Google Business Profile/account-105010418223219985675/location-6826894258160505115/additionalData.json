@@ -1,0 +1,468 @@
+{
+  "attributes": [{
+    "id": {
+      "attributeType": "LISTING_NAME"
+    },
+    "values": [{
+      "datum": {
+        "listingName": {
+          "text": "ExcelKidsHub Phonics Academy"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "PHONE_NUMBER"
+    },
+    "values": [{
+      "datum": {
+        "phoneNumber": {
+          "phoneNumber": "087931 35679",
+          "metadata": {
+            "isPreferred": true
+          },
+          "phoneType": "VOICE",
+          "phoneNumberRfc3966": "tel:+91-87931-35679"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "ADDRESS"
+    },
+    "values": [{
+      "datum": {
+        "address": {
+          "postalAddress": {
+            "regionCode": "IN",
+            "languageCode": "en",
+            "postalCode": "411015",
+            "administrativeArea": "Maharashtra",
+            "locality": "Pune",
+            "addressLines": ["ExcelKidsHub, Lakewook PreSchool, Leela Heights,Lane no 1, Siddharth Nagar", "Dhanori"]
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "POINT"
+    },
+    "values": [{
+      "datum": {
+        "point": {
+          "latE7": 185982900,
+          "lngE7": 739061030
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SERVICE_AREA"
+    },
+    "values": [{
+      "datum": {
+        "serviceArea": {
+          "namedPlace": {
+            "placeId": "ChIJoWI_ndbGwjsRhUK1modWhKE",
+            "placeName": "Dhanori, Pune, Maharashtra, India"
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SIGNUP_REGION"
+    },
+    "values": [{
+      "datum": {
+        "signupRegion": {
+          "regionCode": "IN"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "CATEGORY"
+    },
+    "values": [{
+      "datum": {
+        "category": {
+          "gcid": "gcid:coaching_center",
+          "metadata": {
+          },
+          "localizedName": "Coaching Center"
+        }
+      }
+    }, {
+      "datum": {
+        "category": {
+          "gcid": "gcid:education_center",
+          "metadata": {
+            "isPrimary": true
+          },
+          "localizedName": "Education Centre"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "WEBSITE"
+    },
+    "values": [{
+      "datum": {
+        "website": {
+          "text": "https://excelkidshub.in/"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "OPENING_DATE"
+    },
+    "values": [{
+      "datum": {
+        "openingDate": {
+          "date": {
+            "year": 2019,
+            "month": 1
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "BUSINESS_EXISTENCE"
+    },
+    "values": [{
+      "datum": {
+        "businessExistence": {
+          "businessState": "OPEN"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "CLOSURE"
+    },
+    "values": [{
+      "datum": {
+        "closure": {
+          "type": "NOT_CLOSED"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "REGULAR_HOURS"
+    },
+    "values": [{
+      "datum": {
+        "regularHours": {
+          "periods": [{
+            "startDay": "SUNDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "SUNDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "MONDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "MONDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "TUESDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "TUESDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "WEDNESDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "WEDNESDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "THURSDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "THURSDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "FRIDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "FRIDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }, {
+            "startDay": "SATURDAY",
+            "openTime": {
+              "hours": 9
+            },
+            "endDay": "SATURDAY",
+            "closeTime": {
+              "hours": 21
+            }
+          }]
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "EXCEPTIONAL_HOURS"
+    }
+  }, {
+    "id": {
+      "attributeType": "MERCHANT_DESCRIPTION"
+    },
+    "values": [{
+      "datum": {
+        "merchantDescription": {
+          "text": "Help your child read with confidence at ExcelKidsHub Phonics Academy, Dhanori\u0027s trusted center for early literacy. We are an ISO 9001:2015 certified and MSME (Udyam) registered institute building strong English foundations.\nLed by Certified Trainer Swati Deshmukh, we use the proven Jolly Phonics method to help children (ages 4–12) read fluently and master grammar naturally.\nWhy Parents Trust Us:\n✅ Expert Guidance: Taught by a certified professional.\n✅ Personalized Attention: Small batches ensure no child is left behind.\n✅ Flexible Learning: Offline classes in Pune (Dhanori) \u0026 interactive online sessions globally.\n✅ Visible Results: Improved pronunciation, spelling, and speed.\n📞 Contact us today for a Free Assessment!"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SCALABLE_BOOLEAN",
+      "scalableAttributeExternalId": "is_owned_by_women"
+    },
+    "values": [{
+      "datum": {
+        "scalableBoolean": {
+          "value": true
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SCALABLE_BOOLEAN",
+      "scalableAttributeExternalId": "offers_online_classes"
+    },
+    "values": [{
+      "datum": {
+        "scalableBoolean": {
+          "value": true
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SCALABLE_BOOLEAN",
+      "scalableAttributeExternalId": "requires_appointments"
+    },
+    "values": [{
+      "datum": {
+        "scalableBoolean": {
+          "value": true
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SCALABLE_DEEP_LINK",
+      "scalableAttributeExternalId": "url_text_messaging"
+    },
+    "values": [{
+      "datum": {
+        "scalableDeepLink": {
+          "uri": "sms:+918793135679"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "SCALABLE_DEEP_LINK_OR_PLACE_ACTION",
+      "scalableAttributeExternalId": "url_text_messaging"
+    },
+    "values": [{
+      "datum": {
+        "scalableDeepLinkOrPlaceAction": {
+          "url": "sms:+918793135679"
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "GEOSTORE_PRICE_INFO"
+    },
+    "values": [{
+      "datum": {
+        "geostorePriceInfo": {
+          "priceInfoProto": {
+            "@type": "type.googleapis.com/geostore.PriceInfoProto",
+            "priceList": [{
+              "nameInfo": [{
+                "name": "Jobs",
+                "id": "9e2198c5-afec-4b07-9e37-bc1cd0cbd7e0"
+              }],
+              "section": [{
+                "nameInfo": [{
+                  "name": "Jobs",
+                  "id": "0571a331-a492-466c-ba75-0bc185db1850"
+                }],
+                "itemType": ["TYPE_JOB"],
+                "item": [{
+                  "nameInfo": [{
+                    "name": "Jolly Phonics classes",
+                    "description": "Give your child the power of reading and writing with Jolly Phonics – a fun and effective way to build strong literacy skills! At Excel Kids Hub, we offer specialized Jolly Phonics Classes designed to help children develop a solid foundation in English through a structured, multi-sensory approach.",
+                    "id": "19e66643-b016-4256-a530-abacc889e2ee"
+                  }],
+                  "offered": "OFFERED",
+                  "jobMetadata": {
+                    "jobRelatedCategories": [{
+                      "name": "शिक्षा केंद्र",
+                      "language": "hi",
+                      "gcid": "gcid:education_center"
+                    }]
+                  }
+                }, {
+                  "nameInfo": [{
+                    "name": "Grammar Classes",
+                    "description": "At ExcelKidsHub, we make grammar easy and enjoyable with a structured and interactive learning approach. Our Grammar Classes are designed to help students build a strong foundation in English, improving their writing, speaking, and comprehension skills.",
+                    "id": "5c32f99b-668b-4285-9401-bc7f8faeb5e5"
+                  }],
+                  "offered": "OFFERED",
+                  "jobMetadata": {
+                    "jobRelatedCategories": [{
+                      "name": "शिक्षा केंद्र",
+                      "language": "hi",
+                      "gcid": "gcid:education_center"
+                    }]
+                  }
+                }, {
+                  "nameInfo": [{
+                    "name": "Jolly Phonics Teacher Training and Certification",
+                    "description": "At ExcelKidsHub, we offer Jolly Phonics Training for teachers and parents, empowering them with effective phonics-based teaching methods to enhance children’s reading and writing skills. Our training comes with an ISO-certified certification, ensuring high-quality learning and global recognition.",
+                    "id": "505a1b39-4f1a-4749-a8c6-00e08593f336"
+                  }],
+                  "offered": "OFFERED",
+                  "jobMetadata": {
+                    "jobRelatedCategories": [{
+                      "name": "शिक्षा केंद्र",
+                      "language": "hi",
+                      "gcid": "gcid:education_center"
+                    }]
+                  }
+                }]
+              }]
+            }],
+            "status": {
+              "isVerified": true
+            }
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "VANITY_DATA"
+    }
+  }, {
+    "id": {
+      "attributeType": "FOOD_ORDERING_MERCHANT_PREFERENCE"
+    }
+  }, {
+    "id": {
+      "attributeType": "LABEL"
+    }
+  }, {
+    "id": {
+      "attributeType": "STORE_CODE"
+    }
+  }, {
+    "id": {
+      "attributeType": "GOOGLE_ADS_EXTENSION"
+    }
+  }, {
+    "id": {
+      "attributeType": "ASSISTANT_CALLS_SETTING"
+    }
+  }, {
+    "id": {
+      "attributeType": "CHAIN_SELF_IDENTIFICATION"
+    }
+  }, {
+    "id": {
+      "attributeType": "BUSINESS_AGENT_CONFIG_LISTING_OVERRIDE"
+    }
+  }, {
+    "id": {
+      "attributeType": "ACCEPTS_QUOTE_REQUESTS"
+    }
+  }, {
+    "id": {
+      "attributeType": "DISALLOW_PHONE_NUMBER_EDITS"
+    },
+    "values": [{
+      "datum": {
+        "kgProperty": {
+          "valueProto": {
+            "@type": "type.googleapis.com/freebase.Value",
+            "type": "TYPE_BOOL",
+            "boolValue": false
+          },
+          "value": {
+            "type": "TYPE_BOOL",
+            "boolValue": false
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "CALL_TRACKING"
+    }
+  }, {
+    "id": {
+      "attributeType": "ACCEPTS_SERVICE_REQUESTS"
+    }
+  }, {
+    "id": {
+      "attributeType": "QBC_PRODUCT_TYPE"
+    }
+  }, {
+    "id": {
+      "attributeType": "ADMIN_ROLE_CLAIM"
+    }
+  }, {
+    "id": {
+      "attributeType": "MESSAGING_METADATA"
+    },
+    "values": [{
+      "datum": {
+        "annotation": {
+          "payload": {
+          }
+        }
+      }
+    }]
+  }, {
+    "id": {
+      "attributeType": "GLS_ACCOUNT_STATE"
+    }
+  }, {
+    "id": {
+      "attributeType": "NOREN_QR_CODE_ORDER"
+    }
+  }]
+}

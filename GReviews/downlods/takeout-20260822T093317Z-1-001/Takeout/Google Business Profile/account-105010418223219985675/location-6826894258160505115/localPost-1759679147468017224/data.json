@@ -1,0 +1,37 @@
+{
+  "name": "accounts/105010418223219985675/locations/6826894258160505115/localPosts/1759679147468017224",
+  "languageCode": "en",
+  "summary": "Online Jolly Phonics Basic to Advanced starting in September month ",
+  "callToAction": {
+    "actionType": "CALL"
+  },
+  "state": "LIVE",
+  "event": {
+    "title": "Online Jolly Phonics",
+    "schedule": {
+      "startDate": {
+        "year": 2025,
+        "month": 9,
+        "day": 8
+      },
+      "startTime": {
+      },
+      "endDate": {
+        "year": 2025,
+        "month": 11,
+        "day": 30
+      },
+      "endTime": {
+        "hours": 23,
+        "minutes": 59,
+        "seconds": 59
+      }
+    }
+  },
+  "updateTime": "2025-09-09T17:44:52.726605Z",
+  "createTime": "2025-09-09T17:44:52.726605Z",
+  "timeZone": "Asia/Kolkata",
+  "searchUrl": "https://local.google.com/place?id=12644278938370658093\u0026use=posts\u0026lpsid=CIHM0ogKEImOvJCRu4_wwwE",
+  "expirationTime": "2025-11-30T18:29:59Z",
+  "topicType": "EVENT"
+}

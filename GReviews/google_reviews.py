@@ -12,6 +12,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 import sys
+import ssl
 
 import pandas as pd
 from google.oauth2.credentials import Credentials
@@ -22,6 +23,9 @@ from googleapiclient.errors import HttpError
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.utils import get_column_letter
+
+# Fix SSL certificate issue on Windows
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class GoogleReviewsBackup:
@@ -135,7 +139,7 @@ class GoogleReviewsBackup:
             try:
                 mybusiness_service = build('mybusinessaccountmanagement', 'v1', credentials=creds)
                 account_name = f"accounts/{account_id}"
-                locations_response = mybusiness_service.accounts().locations().list(parent=account_name, pageSize=100).execute()
+                locations_response = mybusiness_service.accounts().listLocations(parent=account_name, pageSize=100).execute()
                 locations = locations_response.get('locations', [])
                 print(f"✓ SUCCESS: Found {len(locations)} location(s)")
                 for location in locations:
@@ -165,7 +169,7 @@ class GoogleReviewsBackup:
         else:
             try:
                 performance_service = build('businessprofileperformance', 'v1', credentials=creds)
-                reviews_response = performance_service.locations().reviews().list(
+                reviews_response = performance_service.locations().fetchReviews(
                     parent=f"locations/{location_id}",
                     pageSize=1
                 ).execute()
@@ -202,11 +206,29 @@ class GoogleReviewsBackup:
         target_location_name = self.config['google_business_profile']['location_name']
         
         try:
-            locations_response = mybusiness_service.accounts().locations().list(parent=account_name, pageSize=100).execute()
-            locations = locations_response.get('locations', [])
+            # Try using the list method to get accounts with locations
+            accounts_response = mybusiness_service.accounts().list().execute()
+            accounts = accounts_response.get('accounts', [])
+            
+            print(f"Found {len(accounts)} account(s) in total")
+            
+            # Find our specific account
+            target_account = None
+            for account in accounts:
+                print(f"Account: {account.get('name')}")
+                if account.get('name') == account_name:
+                    target_account = account
+                    print(f"  -> This is our target account")
+                    print(f"  Account data keys: {list(account.keys())}")
+            
+            if not target_account:
+                raise Exception(f"Account {account_id} not found in list of accounts")
+            
+            # Check if locations are included in the account response
+            locations = target_account.get('locations', [])
             
             if not locations:
-                raise Exception(f"No locations found for account {account_id}. Please ensure you have at least one business location.")
+                raise Exception(f"No locations found for account {account_id}. The API may not return locations in the account list. You may need to manually enter the location_id in config.json.")
             
             print(f"Found {len(locations)} location(s) in this account:")
             for i, location in enumerate(locations, 1):
@@ -215,37 +237,16 @@ class GoogleReviewsBackup:
                 print(f"  {i}. {loc_name} (ID: {loc_id})")
             print()
             
-            # Try to auto-select based on location_name
+            # Auto-select based on location_name
             matching_locations = [loc for loc in locations if target_location_name.lower() in loc.get('locationName', '').lower()]
             
             if matching_locations:
-                if len(matching_locations) == 1:
-                    selected_location = matching_locations[0]
-                    print(f"Automatically selected: {selected_location.get('locationName', 'Unknown')} (matches '{target_location_name}')")
-                else:
-                    print(f"Multiple locations match '{target_location_name}':")
-                    for i, loc in enumerate(matching_locations, 1):
-                        print(f"  {i}. {loc.get('locationName', 'Unknown')}")
-                    selection = input("Select location number: ").strip()
-                    try:
-                        selected_location = matching_locations[int(selection) - 1]
-                    except (ValueError, IndexError):
-                        print("Invalid selection. Using first match.")
-                        selected_location = matching_locations[0]
+                selected_location = matching_locations[0]
+                print(f"Automatically selected: {selected_location.get('locationName', 'Unknown')} (matches '{target_location_name}')")
             else:
-                # No match, ask user to select
-                if len(locations) == 1:
-                    selected_location = locations[0]
-                    print(f"Automatically selected: {selected_location.get('locationName', 'Unknown')}")
-                else:
-                    selection = input("Select location number (or press Enter for location 1): ").strip()
-                    if not selection:
-                        selection = "1"
-                    try:
-                        selected_location = locations[int(selection) - 1]
-                    except (ValueError, IndexError):
-                        print("Invalid selection. Using location 1.")
-                        selected_location = locations[0]
+                # No match, use first location
+                selected_location = locations[0]
+                print(f"No match for '{target_location_name}'. Automatically selected: {selected_location.get('locationName', 'Unknown')}")
             
             location_name = selected_location.get('locationName', 'Unknown')
             location_id = selected_location.get('name', '').split('/')[-1] if '/' in selected_location.get('name', '') else selected_location.get('name', '')
@@ -300,15 +301,26 @@ class GoogleReviewsBackup:
         account_id = self.config['google_business_profile']['account_id']
         location_id = self.config['google_business_profile']['location_id']
         location_name = self.config['google_business_profile']['location_name']
+        skip_discovery = self.config['google_business_profile'].get('skip_location_discovery', False)
         
-        if not location_id:
+        if not location_id and not skip_discovery:
             if account_id:
                 # We have account_id, discover location_id
                 print("Location ID not found in configuration.")
                 print("Starting location discovery using known account_id...")
                 print()
-                location_id = self._discover_location_for_account(creds, account_id)
-                location_name = self.config['google_business_profile']['location_name']
+                try:
+                    location_id = self._discover_location_for_account(creds, account_id)
+                    location_name = self.config['google_business_profile']['location_name']
+                except Exception as e:
+                    print(f"Location discovery failed: {e}")
+                    print()
+                    print("To fix this issue:")
+                    print("1. Go to https://console.cloud.google.com/apis/api/mybusinessaccountmanagement.googleapis.com/quotas")
+                    print("2. Request a quota increase for 'Requests per minute'")
+                    print("3. OR: Find your location_id manually and add it to config.json")
+                    print("4. OR: Set 'skip_location_discovery': true in config.json and provide location_id")
+                    raise Exception("Location discovery failed due to API quota limits. Please add location_id to config.json manually.")
             else:
                 # No account_id either, cannot proceed
                 raise Exception(
@@ -316,8 +328,20 @@ class GoogleReviewsBackup:
                     "Please enter your account_id in config.json to enable automatic location discovery,\n"
                     "or enter both account_id and location_id manually."
                 )
+        elif not location_id and skip_discovery:
+            raise Exception(
+                "skip_location_discovery is set to true but location_id is missing from config.json.\n"
+                "Please add your location_id to config.json."
+            )
         
-        service = build('businessprofileperformance', 'v1', credentials=creds)
+        # Verify IDs before retrieving reviews
+        print(f"Account ID: {account_id}")
+        print(f"Location ID: {location_id}")
+        print(f"Location Name: {location_name}")
+        print()
+        
+        # Use the My Business Account Management API (already enabled) to get locations with reviews
+        service = build('mybusinessaccountmanagement', 'v1', credentials=creds)
         
         self.logger.info(f"Connecting to Google Business Profile: {location_name}")
         self.logger.info(f"Account ID: {account_id}, Location ID: {location_id}")
@@ -331,18 +355,24 @@ class GoogleReviewsBackup:
                 page_count += 1
                 self.logger.info(f"Downloading reviews - Page {page_count}...")
                 
-                # Build the request for reviews
-                request = service.locations().reviews().list(
-                    parent=f"locations/{location_id}",
+                # Use the list method with readMask to include reviews
+                request = service.accounts().locations().list(
+                    parent=f"accounts/{account_id}",
                     pageSize=100,
+                    readMask="name,locationName,reviews",
                     pageToken=page_token
                 )
                 
                 response = request.execute()
                 
-                if 'reviews' in response:
-                    reviews.extend(response['reviews'])
-                    self.logger.info(f"  Retrieved {len(response['reviews'])} reviews on page {page_count}")
+                if 'locations' in response:
+                    locations_data = response['locations']
+                    for location in locations_data:
+                        # Extract reviews from location if present
+                        if 'reviews' in location:
+                            reviews.extend(location['reviews'])
+                    
+                    self.logger.info(f"  Retrieved {len(reviews)} total reviews so far")
                 
                 page_token = response.get('nextPageToken')
                 if not page_token:
